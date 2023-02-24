@@ -1,0 +1,74 @@
+#include<iostream>
+using namespace std;
+#define True 1
+
+struct node
+{
+	int data;
+	struct node *left;
+	struct node *right;
+};
+
+struct node *makenode(int x)
+{
+	struct node *p;
+	p=(struct node *)malloc(sizeof(struct node));
+	p->data=x;
+	p->left=NULL;
+	p->right=NULL;
+	return p;
+}
+
+int search(int inorder[], int start , int end, int cur)
+{
+    for(int i=start; i<=end;i++)
+    {
+        if(inorder[i]==cur)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void In_order_traversal(struct node **root)
+{
+	if((*root)!=NULL)
+	{
+		In_order_traversal(&((*root)->left));
+		cout<<(*root)->data<<" ";
+		In_order_traversal(&((*root)->right));
+	}
+}
+
+struct node* buildtree(int postorder[], int inorder[], int start, int end)
+{
+    struct node *p;
+    static int idx=9;
+    if(start>end)
+    {
+        return NULL;
+    }
+    int cur=postorder[idx];
+    idx--;
+    p=makenode(cur);
+    if(start== end)
+    {
+        return p;
+    }
+    int pos= search(inorder, start, end, cur);
+    p->right=buildtree(postorder , inorder , pos+1 , end);
+    p->left=buildtree(postorder , inorder , start , pos-1);
+    return p;
+}
+
+int main()
+{
+    int postorder[]={3, 6, 7, 4, 12, 11, 8, 2, 5, 10};
+    int inorder[]={3, 12, 6, 4, 7, 10, 11, 5, 2, 8};
+
+    struct node* root;
+    root=buildtree(postorder ,inorder , 0,9);
+    In_order_traversal(&root);
+ return 0;
+}
