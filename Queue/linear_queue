@@ -1,0 +1,84 @@
+#include<iostream>
+using namespace std;
+#define MaxQueue 100
+#define  True 1
+#define False 0
+
+
+struct Queue
+{
+    int item[MaxQueue];
+    int rear;
+    int front;
+};
+
+struct Queue myQ;
+
+void Initialise(struct Queue *Q)
+{
+    Q->front=0;
+    Q->rear=-1;
+}
+
+int Isempty(struct Queue *Q)
+{
+    if(Q->rear - Q->front+1 == 0)
+    {
+        return True;
+    }
+
+    else
+    {
+        return False;
+    }
+}
+
+void EnQueue(struct Queue *Q,char x)
+{
+    if(Q->rear==MaxQueue-1)
+    {
+        cout<<"Queue overflow"<<endl;
+        exit(1);
+    }
+
+    Q->rear=Q->rear+1;
+    Q->item[Q->rear]=x;
+}
+
+char DeQueue(struct Queue *Q)
+{
+    if( Isempty(Q))
+    {
+        cout<<"Queue underflow"<<endl;
+        exit(1);
+    }
+
+    Q->front=Q->front+1;
+    int x=Q->item[Q->front];
+    return x;
+}
+
+int main()
+{
+    Initialise(&myQ);
+    EnQueue(&myQ,'A');
+    EnQueue(&myQ,'B');
+    EnQueue(&myQ,'C');
+    EnQueue(&myQ,'D');
+    EnQueue(&myQ,'E');
+    char y;
+    y=DeQueue(&myQ);
+    cout<<"deleted element is :->"<<y<<endl;
+    y=DeQueue(&myQ);
+    cout<<"deleted element is :->"<<y<<endl;
+    y=DeQueue(&myQ);
+    cout<<"deleted element is :->"<<y<<endl;
+    y=DeQueue(&myQ);
+    cout<<"deleted element is :->"<<y<<endl;
+    y=DeQueue(&myQ);
+    cout<<"deleted element is :->"<<y<<endl;
+    y=DeQueue(&myQ);
+    cout<<"deleted element is :->"<<y<<endl;
+
+ return 0;
+}
